@@ -1,4 +1,5 @@
 # drive_time_tracker
+<<<<<<< HEAD
 
 A new Flutter project.
 
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+Simple flutter app for tracking time behind the wheel while in drivers' ed.
+>>>>>>> dc8728e0cb3d4a3d05cd478fb91f7fdb8e9e85a3
