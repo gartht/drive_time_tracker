@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/HomeScreen.dart';
-import 'screens//DriveList.dart';
+import 'screens/DriveList.dart';
+import 'screens/Settings.dart';
 
 void main() {
   runApp(DriveTimeTracker());
@@ -19,6 +20,7 @@ class DriveTimeTracker extends StatelessWidget {
       home: HomeScreen(title: 'Drive Time Tracker'),
       routes: {
         DriveList.routeName: (context) => DriveList(),
+        Settings.routeName: (context) => Settings(),
       },
     );
   }

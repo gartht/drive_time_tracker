@@ -61,7 +61,7 @@ class _DriveListState extends State<DriveList> {
         title: Text("Past Drives"),
         actions: [
           IconButton(
-            icon: Icon(Icons.clear_all),
+            icon: Icon(Icons.delete_forever),
             onPressed: _deleteAlert,
           )
         ],

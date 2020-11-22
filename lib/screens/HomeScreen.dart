@@ -1,6 +1,8 @@
 import 'package:drive_time_tracker/services/time_recorder.dart';
 import 'package:flutter/material.dart';
 import '../models/DriveRecord.dart';
+import '../screens/Settings.dart';
+import '../screens/DriveList.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -86,13 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return widgets;
   }
 
-  Function get _buttonAction {
-    if (running) return null;
-    return () {
-      Navigator.pushNamed(context, "/driveList");
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,7 +95,20 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           widget.title,
         ),
-        actions: [IconButton(icon: Icon(Icons.list), onPressed: _buttonAction)],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, Settings.routeName);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () {
+              Navigator.pushNamed(context, DriveList.routeName);
+            },
+          ),
+        ],
         centerTitle: true,
       ),
       body: Column(
