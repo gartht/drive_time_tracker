@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   static const routeName = "/settings";
@@ -9,6 +10,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   int _timeGoal;
   NumberPicker integerNumberPicker;
 
@@ -17,6 +19,19 @@ class _SettingsState extends State<Settings> {
     // TODO: pull this from preferences
     super.initState();
     _timeGoal = 0;
+    _prefs.then((SharedPreferences prefs) {
+      setState(() {
+        _timeGoal = (prefs.getInt('goal') ?? 40);
+      });
+    });
+  }
+
+  Future<void> persistGoal(int value) async {
+    var prefs = await _prefs;
+    prefs.setInt('goal', value);
+    setState(() {
+      _timeGoal = value;
+    });
   }
 
   @override
@@ -93,7 +108,7 @@ class _SettingsState extends State<Settings> {
       },
     ).then((num value) {
       if (value != null) {
-        setState(() => _timeGoal = value);
+        persistGoal(value);
       }
     });
   }
