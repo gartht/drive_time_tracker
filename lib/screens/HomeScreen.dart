@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/DriveRecord.dart';
 import '../screens/Settings.dart';
 import '../screens/DriveList.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -48,6 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     widgets.add(Expanded(
+      flex: 1,
+      child: Padding(
+        padding: EdgeInsets.only(top: 30),
+        child: CircularPercentIndicator(
+          radius: 200.0,
+          lineWidth: 20.0,
+          percent: 0.20,
+          center: Text('% Complete'),
+          progressColor: Colors.lightBlueAccent,
+        ),
+      ),
+    ));
+
+    widgets.add(Expanded(
+      flex: 1,
       child: Center(
         child: RaisedButton(
           elevation: 12.0,

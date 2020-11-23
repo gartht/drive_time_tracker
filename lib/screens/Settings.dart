@@ -1,6 +1,6 @@
+import 'package:drive_time_tracker/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   static const routeName = "/settings";
@@ -10,25 +10,25 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final prefService = PreferencesService();
   int _timeGoal;
   NumberPicker integerNumberPicker;
 
   @override
   void initState() {
-    // TODO: pull this from preferences
     super.initState();
     _timeGoal = 0;
-    _prefs.then((SharedPreferences prefs) {
+    prefService.getPreference<int>('goal').then((int hours) {
       setState(() {
-        _timeGoal = (prefs.getInt('goal') ?? 40);
+        hours = hours ?? 40;
+        _timeGoal = hours == 0 ? 40 : hours;
       });
     });
   }
 
-  Future<void> persistGoal(int value) async {
-    var prefs = await _prefs;
-    prefs.setInt('goal', value);
+  void persistGoal(int value) {
+    prefService.setPreference<int>('goal', value);
+
     setState(() {
       _timeGoal = value;
     });
