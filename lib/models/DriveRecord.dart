@@ -43,6 +43,11 @@ class DriveRecord {
     return num < 10 ? '0$num' : '$num';
   }
 
+  int durationInMinutes() {
+    var span = _end.difference(_start);
+    return span.inMinutes;
+  }
+
   String duration() {
     var span = _end.difference(_start);
     var hours = (span.inMinutes / 60).floor();

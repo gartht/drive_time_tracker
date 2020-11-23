@@ -4,6 +4,7 @@ import '../models/DriveRecord.dart';
 import '../screens/Settings.dart';
 import '../screens/DriveList.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:drive_time_tracker/services/preferences_service.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -26,8 +27,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   DateTime _driveStart;
   DateTime _driveEnd;
+  double _percentComplete;
 
   TimeRecorderService svc = TimeRecorderService();
+  PreferencesService psvc = PreferencesService();
+
+  @override
+  void initState() {
+    int _driveMinutes = 0;
+    int _goalMinutes = 0;
+    _percentComplete = 0;
+    Future f1 = svc.getDrives().then((List<DriveRecord> drives) {
+      for (var d in drives) {
+        _driveMinutes += d.durationInMinutes();
+      }
+    });
+    Future f2 = psvc.getPreference<int>('goal').then((int goal) {
+      _goalMinutes = goal;
+    });
+    super.initState();
+    var futures = <Future>[];
+    futures.add(f1);
+    futures.add(f2);
+    Future.wait(futures).then((List<dynamic> l) {
+      setState(() {
+        _percentComplete = _driveMinutes / _goalMinutes;
+      });
+    });
+  }
 
   Future<void> _saveDrive() async {
     var drive = new DriveRecord(_driveStart, _driveEnd);
@@ -55,8 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CircularPercentIndicator(
           radius: 200.0,
           lineWidth: 20.0,
-          percent: 0.20,
-          center: Text('% Complete'),
+          percent: _percentComplete,
+          center: Text(
+            '% Complete: ${_percentComplete * 100}',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           progressColor: Colors.lightBlueAccent,
         ),
       ),
