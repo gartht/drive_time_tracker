@@ -1,39 +1,50 @@
-import 'package:drive_time_tracker/services/networking.dart';
+import 'package:drive_time_tracker/models/Weather.dart';
+//import 'package:drive_time_tracker/services/networking.dart';
 import 'package:drive_time_tracker/services/location.dart';
 
 const String apiUri = 'http://localhost:8080/weather';
 
-class WeatherModel {
-  Future<dynamic> getWeatherData() async {
+class WeatherService {
+  Future<Weather> getWeatherData() async {
     var ls = LocationService();
     await ls.updateLocation();
 
-    if (ls.latitude != null && ls.longitude != null) {
-      String endpoint = '$apiUri?lat=${ls.latitude}&lon=${ls.longitude}';
-      var ns = NetworkService(endpoint);
-      return await ns.getData();
-    } else {
-      print("location data is not available");
-    }
+    return Weather(id: 500, description: "light rain", main: "Rain");
+
+    // if (ls.latitude != null && ls.longitude != null) {
+    //   String endpoint = '$apiUri?lat=${ls.latitude}&lon=${ls.longitude}';
+    //   var ns = NetworkService(endpoint);
+    //   var w = await ns.getData();
+    //   return w["weather"][0];
+    // } else {
+    //   print("location data is not available");
+    // }
   }
 
   String getWeatherIcon(int condition) {
     if (condition < 300) {
+      //thunderstorms
       return '🌩';
     } else if (condition < 400) {
+      //drizzle//
       return '🌧';
     } else if (condition < 600) {
+      //rain
       return '☔️';
     } else if (condition < 700) {
+      //snow
       return '☃️';
     } else if (condition < 800) {
+      //atmosphere
       return '🌫';
     } else if (condition == 800) {
+      //clear
       return '☀️';
     } else if (condition <= 804) {
+      //clouds
       return '☁️';
     } else {
-      return '🤷‍';
+      return '🤷‍'; //don't know
     }
   }
 

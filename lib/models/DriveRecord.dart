@@ -1,20 +1,25 @@
+import 'package:drive_time_tracker/models/Weather.dart';
+
 class DriveRecord {
   DateTime _start;
   DateTime _end;
+  Weather _weather;
 
-  DriveRecord(this._start, this._end);
+  DriveRecord(this._start, this._end, this._weather);
 
   Map<String, dynamic> toJson() {
     return {
       'start': this._start.toIso8601String(),
       'end': this._end.toIso8601String(),
+      'weather': this._weather.toJson(),
     };
   }
 
   factory DriveRecord.fromJson(Map<String, dynamic> json) {
     var start = DateTime.parse(json['start']);
     var end = DateTime.parse(json['end']);
-    return DriveRecord(start, end);
+    var weather = Weather.fromJson(json['weather']);
+    return DriveRecord(start, end, weather);
   }
 
   String date() {
