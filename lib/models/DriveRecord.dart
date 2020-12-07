@@ -11,7 +11,7 @@ class DriveRecord {
     return {
       'start': this._start.toIso8601String(),
       'end': this._end.toIso8601String(),
-      'weather': this._weather.toJson(),
+      'weather': this._weather?.toJson(),
     };
   }
 

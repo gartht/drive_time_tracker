@@ -1,3 +1,5 @@
+import 'package:drive_time_tracker/models/Weather.dart';
+import 'package:drive_time_tracker/services/weather_service.dart';
 import 'package:drive_time_tracker/services/time_recorder.dart';
 import 'package:flutter/material.dart';
 import '../models/DriveRecord.dart';
@@ -28,14 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime _driveStart;
   DateTime _driveEnd;
   double _percentComplete;
+  Weather _weather;
 
   TimeRecorderService svc = TimeRecorderService();
   PreferencesService psvc = PreferencesService();
+  WeatherService wsvc = WeatherService();
+
+  void getWeather() async {
+    _weather = await wsvc.getWeatherData();
+  }
 
   @override
   void initState() {
     int _driveMinutes = 0;
-    int _goalMinutes = 0;
+    int _goalMinutes = 1;
     _percentComplete = 0;
     Future f1 = svc.getDrives().then((List<DriveRecord> drives) {
       for (var d in drives) {
@@ -43,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     Future f2 = psvc.getPreference<int>('goal').then((int goal) {
-      _goalMinutes = goal;
+      goal = goal ?? 1;
+      _goalMinutes = goal > 0 ? goal : 1;
     });
     super.initState();
     var futures = <Future>[];
@@ -57,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _saveDrive() async {
-    var drive = new DriveRecord(_driveStart, _driveEnd);
+    var drive = new DriveRecord(_driveStart, _driveEnd, _weather);
     await svc.addDrive(drive);
   }
 
@@ -125,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _driveEnd = DateTime.now();
                 _saveDrive();
               } else {
+                getWeather();
                 _driveStart = DateTime.now();
               }
               running = !running;

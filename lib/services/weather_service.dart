@@ -1,24 +1,28 @@
+import 'dart:convert';
+
 import 'package:drive_time_tracker/models/Weather.dart';
-//import 'package:drive_time_tracker/services/networking.dart';
+import 'package:drive_time_tracker/services/networking.dart';
 import 'package:drive_time_tracker/services/location.dart';
 
-const String apiUri = 'http://localhost:8080/weather';
+const String apiUri = 'http://localhost:8081/weather';
 
 class WeatherService {
   Future<Weather> getWeatherData() async {
     var ls = LocationService();
     await ls.updateLocation();
 
-    return Weather(id: 500, description: "light rain", main: "Rain");
-
-    // if (ls.latitude != null && ls.longitude != null) {
-    //   String endpoint = '$apiUri?lat=${ls.latitude}&lon=${ls.longitude}';
-    //   var ns = NetworkService(endpoint);
-    //   var w = await ns.getData();
-    //   return w["weather"][0];
-    // } else {
-    //   print("location data is not available");
-    // }
+    if (ls.latitude != null && ls.longitude != null) {
+      String endpoint = '$apiUri?lat=${ls.latitude}&lon=${ls.longitude}';
+      var ns = NetworkService(endpoint);
+      var w = await ns.getData();
+      //return Weather(id: 500, description: "light rain", main: "Rain");
+      //return w["weather"][0];
+      //var we = jsonDecode(w)["weather"];
+      return Weather.fromJson(w["weather"][0]);
+    } else {
+      print("location data is not available");
+      return Weather();
+    }
   }
 
   String getWeatherIcon(int condition) {
