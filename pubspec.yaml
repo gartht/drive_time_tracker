@@ -21,6 +21,10 @@ dependencies:
   percent_indicator: ^2.1.8
   geolocator: ^6.1.4
   http: ^0.12.2
+  firebase_core: ^0.5.3
+  firebase_auth: ^0.18.4+1
+  firebase_auth_ui: ^1.0.1
+  progress_indicators: ^0.1.5
 
 dev_dependencies:
   flutter_test:

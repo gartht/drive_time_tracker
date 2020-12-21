@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "654590546628",
+    "project_id": "yet-another-hello-world-a1",
+    "storage_bucket": "yet-another-hello-world-a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654590546628:android:acb703ddf2369607042f91",
+        "android_client_info": {
+          "package_name": "com.gartht.drive_time_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654590546628-87n8s8ee5ff6nv40b0cev8r6sfpfbrat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gartht.drive_time_tracker",
+            "certificate_hash": "7d17407cff0ee7034dd8722538360b2d91db03bd"
+          }
+        },
+        {
+          "client_id": "654590546628-0onnk09mfrcdkgggr5dof2n8rv7u1phs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsg1thsiuMwa184BlS7sxmoDfCfQz6lv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654590546628-0onnk09mfrcdkgggr5dof2n8rv7u1phs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

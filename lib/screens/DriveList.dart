@@ -72,19 +72,29 @@ class _DriveListState extends State<DriveList> {
           return Padding(
             padding: EdgeInsets.only(top: 1.0),
             child: ListTile(
+              // trailing: IconButton(
+              //   icon: Icon(Icons.delete),
+              //   color: Colors.black,
+              //   onPressed: () {
+              //     widget.svc.deleteAtIndex(index);
+              //   },
+              // ),
               trailing: IconButton(
-                icon: Icon(Icons.delete),
+                icon: Icon(Icons.more_vert),
                 color: Colors.black,
                 onPressed: () {
-                  print('delete requested for index $index');
-                  widget.svc.deleteAtIndex(index);
+                  print("drive detail requested");
+                  // navigate to drive detail
                 },
               ),
               tileColor: Colors.green[200],
-              title: Text(_drs[index].date()),
-              isThreeLine: true,
+              title: Text(
+                _drs[index].date(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              isThreeLine: false,
               subtitle: Text(
-                'Start: ${_drs[index].startTime()}\nEnd: ${_drs[index].endTime()}\nDuration: ${_drs[index].duration()}',
+                'Duration: ${_drs[index].duration()}',
                 style: TextStyle(color: Colors.black),
               ),
               dense: true,

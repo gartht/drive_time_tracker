@@ -1,6 +1,8 @@
 import 'package:drive_time_tracker/models/Weather.dart';
 import 'package:drive_time_tracker/services/weather_service.dart';
 import 'package:drive_time_tracker/services/time_recorder.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/DriveRecord.dart';
 import '../screens/Settings.dart';
@@ -12,6 +14,8 @@ class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
 
   final String title;
+
+  static String routeName = "homescreen";
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -93,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           lineWidth: 20.0,
           percent: _percentComplete,
           center: Text(
-            '% Complete: ${_percentComplete * 100}',
+            '% Complete: ${(_percentComplete * 100).toStringAsFixed(1)}',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -151,6 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            FirebaseAuth.instance.signOut();
+          },
+        ),
         title: Text(
           widget.title,
         ),
