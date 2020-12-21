@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:drive_time_tracker/services/auth.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/DriveList.dart';
 import 'screens/Settings.dart';
 import 'screens/LoadingScreen.dart';
 import 'screens/Login.dart';
-import 'package:drive_time_tracker/services/auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await AuthService.initialize();
   runApp(DriveTimeTracker());
 }
 
@@ -26,16 +24,15 @@ class DriveTimeTracker extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: AuthService.instance.authChanges(),
           builder: (_, _snapshot) {
             if (_snapshot.connectionState == ConnectionState.waiting) {
               return LoadingScreen();
-            } else if (_snapshot.data is User && _snapshot.data != null) {
+            } else if (_snapshot.data is DTTUser && _snapshot.data != null) {
               return HomeScreen(
                 title: "Drive Time Tracker",
               );
             } else {
-              //AuthService().presentLogin();
               return LoginScreen();
             }
           }),
