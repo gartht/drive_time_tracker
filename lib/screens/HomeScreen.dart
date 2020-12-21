@@ -1,12 +1,11 @@
 import 'package:drive_time_tracker/models/Weather.dart';
 import 'package:drive_time_tracker/services/weather_service.dart';
 import 'package:drive_time_tracker/services/time_recorder.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../models/DriveRecord.dart';
-import '../screens/Settings.dart';
-import '../screens/DriveList.dart';
+import 'package:drive_time_tracker/models/DriveRecord.dart';
+import 'package:drive_time_tracker/screens/Settings.dart';
+import 'package:drive_time_tracker/screens/DriveList.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:drive_time_tracker/services/preferences_service.dart';
 
